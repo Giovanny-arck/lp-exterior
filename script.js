@@ -4,17 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
     updateFooterYear();
 });
 
-// --- 1. FUNÇÃO DE ROLAGEM AO TOPO (HERO) ---
-// Esta função é chamada pelos botões nas outras seções
+// --- CONFIGURAÇÃO DOS WEBHOOKS ---
+const WEBHOOK_URL_1 = 'https://n8neditor.arck1pro.shop/webhook-test/teste'; // Webhook Principal
+const WEBHOOK_URL_2 = 'SUA_SEGUNDA_URL_DO_N8N_AQUI'; // Webhook Secundário (opcional)
+
+// --- 1. FUNÇÃO DE ROLAGEM AO TOPO ---
 function scrollToHero() {
-    // Rola suavemente para o topo da página onde está o formulário
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-    
-    // Opcional: Focar no primeiro campo do formulário após a rolagem
-    // setTimeout(() => document.getElementById('nome').focus(), 800);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // --- 2. INPUT DE TELEFONE INTERNACIONAL ---
@@ -24,12 +20,12 @@ function initPhoneInput() {
     if (input && window.intlTelInput) {
         iti = window.intlTelInput(input, {
             initialCountry: "auto",
-            preferredCountries: ['br', 'us', 'pt', 'es', 'it', 'gb'],
+            preferredCountries: ['us', 'br', 'pt', 'es', 'it', 'gb'],
             geoIpLookup: callback => {
                 fetch("https://ipapi.co/json")
                     .then(res => res.json())
                     .then(data => callback(data.country_code))
-                    .catch(() => callback("br"));
+                    .catch(() => callback("us"));
             },
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
             separateDialCode: true
@@ -44,12 +40,18 @@ function initFormSubmission() {
 
     if (!form || !submitBtn) return;
 
-    // Captura UTMs
+    // Função para capturar todas as UTMs da URL
     const getUtms = () => {
         const utms = {};
-        new URLSearchParams(window.location.search).forEach((value, key) => {
-            if (key.startsWith('utm_')) utms[key] = value;
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Lista de UTMs padrão para garantir que existam mesmo se vazias (opcional, mas recomendado)
+        const standardUtms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+        
+        standardUtms.forEach(key => {
+            utms[key] = urlParams.get(key) || ''; // Retorna vazio se não achar na URL
         });
+
         return utms;
     };
 
@@ -66,37 +68,58 @@ function initFormSubmission() {
         submitBtn.disabled = true;
         submitBtn.innerText = 'ENVIANDO...';
 
+        // Monta o objeto de dados (JSON) que será enviado
         const formData = {
+            // Dados do Lead
             nome: form.nome.value,
             email: form.email.value,
             whatsapp: iti ? iti.getNumber() : form.whatsapp.value,
+            estado: form.estado.value,
             profissao: form.profissao.value,
             valor_investimento: form.valor_investimento.value,
-            origem: 'LP Hero Form',
-            ...getUtms()
+            
+            // Dados de Rastreamento
+            origem: 'LP Investidor Global', // Origem fixa interna
+            ...getUtms() // ESPALHA AS UTMS AQUI (SEM AGRUPAR)
         };
 
         try {
-            const response = await fetch('https://n8nwebhook.arck1pro.shop/webhook/lp-lead-direto', {
+            // 1. Envio Principal (CRM/N8N)
+            const response1 = await fetch(WEBHOOK_URL_1, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
 
-            if (response.status === 409) {
+            if (response1.status === 409) {
                 alert('Seus dados já constam em nossa base. Entraremos em contato em breve.');
                 submitBtn.disabled = false;
                 submitBtn.innerText = originalBtnText;
-            } else if (!response.ok) {
-                throw new Error('Erro servidor');
-            } else {
-                if (typeof fbq === 'function') fbq('track', 'Lead');
-                window.location.href = 'obrigado.html';
+                return;
+            } else if (!response1.ok) {
+                throw new Error('Erro no servidor principal');
             }
 
+            // 2. Envio Secundário (se configurado)
+            if (WEBHOOK_URL_2 && WEBHOOK_URL_2 !== 'SUA_SEGUNDA_URL_DO_N8N_AQUI') {
+                try {
+                    await fetch(WEBHOOK_URL_2, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                } catch (error2) {
+                    console.warn('Webhook secundário falhou, mas seguimos.', error2);
+                }
+            }
+
+            // SUCESSO - Evento Pixel e Redirecionamento
+            if (typeof fbq === 'function') fbq('track', 'Lead');
+            window.location.href = 'obrigado.html';
+
         } catch (error) {
-            console.error(error);
-            alert('Erro técnico. Tente novamente em instantes.');
+            console.error('Erro fatal:', error);
+            alert('Ocorreu um erro técnico. Por favor, tente novamente.');
             submitBtn.disabled = false;
             submitBtn.innerText = originalBtnText;
         }

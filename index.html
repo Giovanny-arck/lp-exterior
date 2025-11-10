@@ -59,21 +59,38 @@
               <label for="whatsapp" class="visually-hidden">WhatsApp / Telefone</label>
               <input type="tel" id="whatsapp" name="whatsapp" required autocomplete="tel">
             </div>
+
+            <div class="input-group">
+                <label for="estado" class="visually-hidden">Estado/Província</label>
+                <input type="text" id="estado" name="estado" placeholder="Estado/Província*" required>
+            </div>
             
             <div class="input-group">
                 <label for="profissao" class="visually-hidden">Profissão Atual</label>
-                <input type="text" id="profissao" name="profissao" placeholder="Sua profissão*" required autocomplete="organization-title">
+                <select name="profissao" id="profissao" required>
+                  <option value="">Selecione sua Profissão*</option>
+                  <option value="Empresário">Empresário(a)</option>
+                  <option value="Investidor">Investidor(a)</option>
+                  <option value="Médico">Médico(a)</option>
+                  <option value="Advogado">Advogado(a)</option>
+                  <option value="Engenheiro">Engenheiro(a)</option>
+                  <option value="TI/Desenvolvedor">Profissional de TI</option>
+                  <option value="Funcionário Público">Funcionário Público</option>
+                  <option value="Profissional Liberal">Profissional Liberal</option>
+                  <option value="Aposentado">Aposentado(a)</option>
+                  <option value="Outros">Outros</option>
+                </select>
              </div>
  
              <div class="input-group">
                <label for="valor_investimento" class="visually-hidden">Potencial de Aporte</label>
                <select name="valor_investimento" id="valor_investimento" required>
                  <option value="">Selecione o seu aporte inicial de investimento</option>
-                 <option value="Até 50 mil">R$ 50 mil</option>
-                 <option value="50-100">R$ 50 mil a R$ 100 mil</option>
-                 <option value="100-150">R$ 100 mil a R$ 150 mil</option>
-                 <option value="150-200">R$ 150 mil a R$ 200 mil</option>
-                 <option value="Acima de 200 mil">Acima de R$ 200 mil</option>
+                 <option value="50-99">R$ 50 mil a R$ 99 mil</option>
+                 <option value="100-199">R$ 100 mil a R$ 199 mil</option>
+                 <option value="200-299">R$ 200 mil a R$ 299 mil</option>
+                 <option value="300-399">R$ 300 mil a R$ 399 mil</option>
+                 <option value="Acima de 400 mil">Acima de R$ 400 mil</option>
                </select>
              </div>
 
