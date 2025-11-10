@@ -1,0 +1,282 @@
+/* --- 1. RESET & VARS --- */
+:root {
+    --color-primary: #071F3A;
+    --color-accent: #16A34A;
+    --color-accent-hover: #12853d;
+    --color-text-dark: #1F2937;
+    --color-bg-light: #F9FAFB;
+    --color-dourado: #D4AF37;
+    --section-spacing: 80px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Arial", Roboto, Helvetica, sans-serif; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.mt-4 { margin-top: 1.5rem; } /* Utilitário de margem */
+
+body { background-color: #fff; color: var(--color-text-dark); line-height: 1.5; }
+.container { width: 90%; max-width: 1300px; margin: 0 auto; }
+
+/* --- 2. HERO SECTION (GRID LAYOUT) --- */
+.hero-section {
+    position: relative;
+    min-height: 100vh; /* Garante tela cheia na maioria dos dispositivos */
+    display: flex;
+    align-items: center;
+    padding: 40px 0; /* Reduzi o padding vertical para caber melhor em telas menores */
+    color: white;
+    overflow-x: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(180deg, rgba(7,31,58,0.9) 0%, rgba(5,21,40,0.95) 100%), url('/img/img-hero.webp') center/cover no-repeat;
+    z-index: -2;
+}
+
+@media (min-width: 768px) {
+    .hero-background {
+        background-image: linear-gradient(90deg, rgba(7,31,58,0.95) 0%, rgba(7,31,58,0.5) 100%), url('/img/img-hero.webp');
+        background-position: left; /* Ajuste para focar no horizonte */
+    }
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+    z-index: 2;
+}
+
+/* Hero Text (Mobile First) */
+.hero-text {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-logo { max-width: 280px; height: auto; margin-bottom: 25px; }
+
+.hero-title {
+    font-size: 1.75rem; /* 28px */
+    line-height: 1.2;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+/* Adicione isso ao seu style.css */
+.highlight {
+    color: var(--color-dourado); /* Usa o verde #16A34A já definido no seu :root */
+    font-weight: 900; /* Opcional: deixa um pouco mais negrito que o resto */
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    opacity: 0.9;
+    line-height: 1.5;
+    max-width: 500px;
+    color: #ffffff;
+}
+
+.mobile-only-cta {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--color-accent);
+    font-weight: 700;
+    animation: bounce 2s infinite;
+}
+
+/* Hero Form Card */
+.form-card {
+    background-color: white;
+    padding: 25px 20px;
+    border-radius: 12px;
+    color: var(--color-text-dark);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    max-width: 450px;
+    margin: 0 auto; /* Centraliza no mobile */
+}
+
+.form-title {
+    text-align: center;
+    color: var(--color-primary);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+.form-subtitle {
+    text-align: center;
+    color: #64748B;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.main-form { display: flex; flex-direction: column; gap: 12px; }
+
+.main-form input, .main-form select {
+    width: 100%;
+    padding: 12px 16px; /* Padding confortável para toque */
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 16px; /* Evita zoom no iOS */
+    color: var(--color-text-dark);
+    background-color: #F8FAFC;
+    transition: all 0.2s;
+}
+
+.main-form input:focus, .main-form select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(7,31,58,0.1);
+}
+
+.submit-btn-full {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    text-transform: uppercase;
+}
+
+.submit-btn-full:hover { background-color: var(--color-accent-hover); transform: translateY(-2px); }
+.submit-btn-full:active { transform: translateY(0); }
+
+.privacy-text {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #94A3B8;
+    margin-top: 10px;
+}
+
+/* --- 3. SEÇÕES DE CONTEÚDO & BOTÕES CTA --- */
+.benefits-section, .authority-section { padding: 60px 0; }
+.benefits-section { background-color: var(--color-bg-light); }
+
+.section-title {
+    font-size: 1.55rem;
+    text-align: center;
+    color: var(--color-primary);
+    margin-bottom: 40px;
+    font-weight: 800;
+}
+
+.benefits-grid {
+    display: grid;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.benefit-item {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.icon-box { font-size: 2.5rem; margin-bottom: 15px; }
+.benefit-item h3 { color: var(--color-primary); margin-bottom: 10px; font-weight: 700; }
+
+/* Botões de Retorno (Scroll to Top) */
+.section-cta { text-align: center; }
+.secondary-btn, .cta-button {
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    border: none;
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+.secondary-btn:hover { background-color: var(--color-primary); color: white; }
+
+.cta-button {
+    background-color: var(--color-accent);
+    color: white;
+    box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
+}
+.cta-button:hover { background-color: var(--color-accent-hover); transform: translateY(-2px); }
+
+/* Authority */
+.authority-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.authority-image-wrapper {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px -12px rgba(0,0,0,0.2);
+}
+.authority-img { width: 100%; display: block; }
+.authority-text { text-align: center; max-width: 600px; }
+.label-highlight { color: var(--color-accent); font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; display: block; margin-bottom: 10px; }
+.authority-text h2 { font-size: 1.75rem; color: var(--color-primary); line-height: 1.2; margin-bottom: 15px; }
+
+/* --- 4. FOOTER --- */
+.site-footer { background-color: var(--color-primary); color: #94A3B8; text-align: center; padding: 40px 0; }
+.site-footer .footer-logo { margin-bottom: 20px; opacity: 0.8; }
+
+/* --- 5. MEDIA QUERIES (DESKTOP - min 1024px para garantir espaço lateral) --- */
+@media (min-width: 1024px) {
+    .hero-section { padding: 80px 0; align-items: center; }
+    .hero-grid {
+        grid-template-columns: 1.2fr 1fr; /* Mais espaço para texto, menos para form */
+        gap: 60px;
+        align-items: center; /* Centraliza verticalmente */
+    }
+    .hero-text {
+        text-align: left;
+        align-items: flex-start;
+        margin-top: -100px;
+    }
+    .hero-logo { margin-left: 0; max-width: 480px; margin-left: -100px;}
+    .hero-title { font-size: 3rem; }
+    .hero-subtitle { font-size: 1.25rem; }
+    .mobile-only-cta { display: none; }
+    
+    .form-card { margin: 0; margin-left: auto; /* Empurra form para direita */ }
+    
+    .benefits-grid { grid-template-columns: repeat(3, 1fr); }
+    .authority-container { flex-direction: row; text-align: left; justify-content: space-between; }
+    .authority-text { text-align: left; padding-left: 40px; }
+}
+
+/* Animações */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+.pulse-subtle { animation: pulse-soft 3s infinite; }
+@keyframes pulse-soft {
+    0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(22, 163, 74, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+.iti { width: 100%; }
