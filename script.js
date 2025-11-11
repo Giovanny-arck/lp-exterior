@@ -92,7 +92,7 @@ function initFormSubmission() {
             });
 
             if (response1.status === 409) {
-                alert('Seus dados já constam em nossa base. Entraremos em contato em breve.');
+                alert('Seus dados já constam em nossa base.');
                 submitBtn.disabled = false;
                 submitBtn.innerText = originalBtnText;
                 return;
