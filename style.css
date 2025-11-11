@@ -51,7 +51,7 @@ body { background-color: #fff; color: var(--color-text-dark); line-height: 1.5; 
 
 /* Hero Text (Mobile First) */
 .hero-text {
-    text-align: justify;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
