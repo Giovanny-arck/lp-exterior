@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // --- CONFIGURAÇÃO DOS WEBHOOKS ---
 const WEBHOOK_URL_1 = 'https://n8nwebhook.arck1pro.shop/webhook/crmexterior'; // Webhook Principal
-const WEBHOOK_URL_2 = 'https://n8nwebhook.arck1pro.shop/webhook/exteriormktrd'; // Webhook Secundário (opcional)
+const WEBHOOK_URL_2 = 'https://n8nwebhook.arck1pro.shop/webhook/exteriormktrd'; // Webhook Secundário
 
 // --- 1. FUNÇÃO DE ROLAGEM AO TOPO ---
 function scrollToHero() {
@@ -25,7 +25,7 @@ function initPhoneInput() {
                 fetch("https://ipapi.co/json")
                     .then(res => res.json())
                     .then(data => callback(data.country_code))
-                    .catch(() => callback("us"));
+                    .catch(() => callback("us")); // Mantido "us" como no seu original
             },
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
             separateDialCode: true
@@ -45,11 +45,10 @@ function initFormSubmission() {
         const utms = {};
         const urlParams = new URLSearchParams(window.location.search);
         
-        // Lista de UTMs padrão para garantir que existam mesmo se vazias (opcional, mas recomendado)
         const standardUtms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
         
         standardUtms.forEach(key => {
-            utms[key] = urlParams.get(key) || ''; // Retorna vazio se não achar na URL
+            utms[key] = urlParams.get(key) || ''; 
         });
 
         return utms;
@@ -101,7 +100,7 @@ function initFormSubmission() {
             }
 
             // 2. Envio Secundário (se configurado)
-            if (WEBHOOK_URL_2 && WEBHOOK_URL_2 !== 'https://n8nwebhook.arck1pro.shop/webhook/exteriormktrd') {
+            if (WEBHOOK_URL_2) { 
                 try {
                     await fetch(WEBHOOK_URL_2, {
                         method: 'POST',
@@ -114,7 +113,11 @@ function initFormSubmission() {
             }
 
             // SUCESSO - Evento Pixel e Redirecionamento
+            
+            // !!!!!!!!!! ALTERAÇÃO FEITA AQUI !!!!!!!!!!
             if (typeof fbq === 'function') fbq('track', 'CompleteRegistration');
+            // !!!!!!!!!! FIM DA ALTERAÇÃO !!!!!!!!!!
+
             window.location.href = 'obrigado.html';
 
         } catch (error) {
