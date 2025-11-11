@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // --- CONFIGURAÇÃO DOS WEBHOOKS ---
-const WEBHOOK_URL_1 = 'https://n8neditor.arck1pro.shop/webhook-test/teste'; // Webhook Principal
+const WEBHOOK_URL_1 = 'https://n8neditor.arck1pro.shop/webhook-test/crmexterior'; // Webhook Principal
 const WEBHOOK_URL_2 = 'SUA_SEGUNDA_URL_DO_N8N_AQUI'; // Webhook Secundário (opcional)
 
 // --- 1. FUNÇÃO DE ROLAGEM AO TOPO ---
