@@ -1,4 +1,6 @@
 /* --- 1. RESET & VARS --- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+/* --- 1. RESET & VARS --- */
 :root {
     --color-primary: #071F3A;
     --color-accent: #16A34A;
@@ -9,7 +11,7 @@
     --section-spacing: 80px;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Arial", Roboto, Helvetica, sans-serif; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 .mt-4 { margin-top: 1.5rem; } /* Utilitário de margem */
 
