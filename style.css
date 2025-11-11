@@ -167,7 +167,7 @@ body { background-color: #fff; color: var(--color-text-dark); line-height: 1.5; 
 .benefits-section { background-color: var(--color-bg-light); }
 
 .section-title {
-    font-size: 1.55rem;
+    font-size: 2rem;
     text-align: center;
     color: var(--color-primary);
     margin-bottom: 40px;
