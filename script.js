@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // --- CONFIGURAÇÃO DOS WEBHOOKS ---
-const WEBHOOK_URL_1 = 'https://n8neditor.arck1pro.shop/webhook-test/crmexterior'; // Webhook Principal
-const WEBHOOK_URL_2 = 'SUA_SEGUNDA_URL_DO_N8N_AQUI'; // Webhook Secundário (opcional)
+const WEBHOOK_URL_1 = 'https://n8nwebhook.arck1pro.shop/webhook/crmexterior'; // Webhook Principal
+const WEBHOOK_URL_2 = 'https://n8nwebhook.arck1pro.shop/webhook/exteriormktrd'; // Webhook Secundário (opcional)
 
 // --- 1. FUNÇÃO DE ROLAGEM AO TOPO ---
 function scrollToHero() {
@@ -101,7 +101,7 @@ function initFormSubmission() {
             }
 
             // 2. Envio Secundário (se configurado)
-            if (WEBHOOK_URL_2 && WEBHOOK_URL_2 !== 'SUA_SEGUNDA_URL_DO_N8N_AQUI') {
+            if (WEBHOOK_URL_2 && WEBHOOK_URL_2 !== 'https://n8nwebhook.arck1pro.shop/webhook/exteriormktrd') {
                 try {
                     await fetch(WEBHOOK_URL_2, {
                         method: 'POST',
@@ -114,7 +114,7 @@ function initFormSubmission() {
             }
 
             // SUCESSO - Evento Pixel e Redirecionamento
-            if (typeof fbq === 'function') fbq('track', 'Lead');
+            if (typeof fbq === 'function') fbq('track', 'CompleteRegistration');
             window.location.href = 'obrigado.html';
 
         } catch (error) {
